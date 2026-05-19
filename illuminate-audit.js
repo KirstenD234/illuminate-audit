@@ -213,7 +213,7 @@ var IlluminateAudit = (function() {
   function wireButtons() {
     try {
       var start = document.getElementById('btn-start');
-      if (!start) { setTimeout(wireButtons, 150); return; }
+      if (!start) { return false; }
       start.addEventListener('click', startQuiz);
       var startTop = document.getElementById('btn-start-top');
       if (startTop) { startTop.addEventListener('click', startQuiz); }
@@ -221,9 +221,28 @@ var IlluminateAudit = (function() {
       document.getElementById('btn-back').addEventListener('click', prevQuestion);
       document.getElementById('btn-submit').addEventListener('click', submitEmail);
       document.getElementById('btn-retake').addEventListener('click', retake);
-    } catch(e) { setTimeout(wireButtons, 150); }
+      return true;
+    } catch(e) { return false; }
   }
-  setTimeout(wireButtons, 300);
+
+  // Use MutationObserver to watch for the button appearing in the DOM
+  var observer = new MutationObserver(function() {
+    if (wireButtons()) {
+      observer.disconnect();
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // Also try immediately and at intervals as fallback
+  if (!wireButtons()) {
+    var attempts = 0;
+    var interval = setInterval(function() {
+      attempts++;
+      if (wireButtons() || attempts > 50) {
+        clearInterval(interval);
+      }
+    }, 200);
+  }
 
   return {};
 })();
