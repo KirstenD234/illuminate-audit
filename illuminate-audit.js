@@ -1,3 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Executive Energy Audit | Illuminate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sage: #aac1b3; --sage-light: #ddeae3; --sage-dark: #6a9278;
+      --taupe: #cdc0b0; --rose: #d1bab4; --cream: #f9f6f1;
+      --charcoal: #444444; --charcoal-light: #6b6b6b; --white: #ffffff;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #F9F6F1; color: var(--charcoal); min-height: 100vh; }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* INTRO */
+    #screen-intro { padding: 4rem 0 3rem; }
+    .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage-dark); margin-bottom: 1.2rem; }
+    #screen-intro h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.9rem; font-weight: 300; line-height: 1.12; margin-bottom: 1.4rem; }
+    #screen-intro h1 em { font-style: italic; color: var(--sage-dark); }
+    .intro-promise { background: var(--sage-light); border-left: 3px solid var(--sage-dark); border-radius: 0 5px 5px 0; padding: 1.1rem 1.3rem; margin-bottom: 1.5rem; font-size: 15px; font-weight: 400; line-height: 1.7; color: var(--charcoal); }
+    .intro-promise strong { font-weight: 500; color: var(--sage-dark); }
+    .intro-body { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--charcoal); margin-bottom: 1rem; }
+    .pain-list { list-style: none; margin: 1rem 0 1.5rem; display: flex; flex-direction: column; gap: 8px; }
+    .pain-list li { font-size: 14px; font-weight: 300; color: var(--charcoal); padding-left: 20px; position: relative; line-height: 1.5; }
+    .pain-list li::before { content: ''; position: absolute; left: 4px; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--rose); }
+    .outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 1.5rem 0; }
+    .outcome-card { background: var(--white); border: 1px solid var(--taupe); border-radius: 6px; padding: 1rem 1.1rem; }
+    .outcome-number { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--sage); line-height: 1; margin-bottom: 4px; }
+    .outcome-label { font-size: 13px; font-weight: 500; color: var(--charcoal); margin-bottom: 3px; }
+    .outcome-desc { font-size: 12px; font-weight: 300; color: var(--charcoal); line-height: 1.5; }
+    .for-who { display: block; background: var(--charcoal); color: var(--white); font-size: 20px; font-weight: 500; padding: 14px 20px; border-radius: 4px; margin-bottom: 1.4rem; line-height: 1.4; }
+    .quick-wins { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 1rem 0 1.4rem; }
+    .quick-wins li { font-size: 14px; font-weight: 500; color: var(--charcoal); letter-spacing: 0.01em; }
+    .quick-wins li { color: var(--charcoal); }
+    .intro-meta { font-size: 12px; color: var(--charcoal); margin: 1.2rem 0 1.8rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .intro-meta span::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--sage); margin-right: 6px; vertical-align: middle; }
+
+    /* BUTTONS */
+    .btn-primary { display: inline-block; padding: 15px 30px; background: var(--sage); color: var(--white); border: none; border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.2s; letter-spacing: 0.02em; }
+    .btn-primary:hover { background: var(--sage-dark); }
+    .btn-primary:disabled { background: var(--taupe); cursor: not-allowed; }
+    .btn-secondary { display: inline-block; padding: 12px 24px; background: transparent; color: var(--charcoal-light); border: 1.5px solid var(--taupe); border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+    .btn-secondary:hover { border-color: var(--sage); color: var(--charcoal); }
+
+    /* QUIZ */
+    #screen-quiz { padding: 2.5rem 0 3rem; display: none; }
+    .progress-wrap { margin-bottom: 2rem; }
+    .progress-top { display: flex; justify-content: space-between; font-size: 11px; color: var(--charcoal-light); margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .progress-bar { height: 3px; background: var(--taupe); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--sage); border-radius: 2px; transition: width 0.4s ease; }
+    .q-dimension { font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage-dark); margin-bottom: 0.6rem; }
+    .q-text { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; line-height: 1.3; color: var(--charcoal); margin-bottom: 1.8rem; }
+    .options { display: flex; flex-direction: column; gap: 0.6rem; }
+    .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; background: var(--white); border: 1.5px solid var(--taupe); border-radius: 5px; cursor: pointer; transition: border-color 0.15s, background 0.15s; font-size: 14px; font-weight: 300; line-height: 1.5; color: var(--charcoal); text-align: left; width: 100%; }
+    .option:hover { border-color: var(--sage); background: var(--sage-light); }
+    .option.selected { border-color: var(--sage-dark); background: var(--sage-light); }
+    .option-letter { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--taupe); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: var(--charcoal-light); margin-top: 1px; transition: background 0.15s, border-color 0.15s; }
+    .option.selected .option-letter { background: var(--sage-dark); border-color: var(--sage-dark); color: var(--white); }
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+
+    /* RESULT */
+    #screen-result { padding: 0 0 3rem; display: none; }
+    .result-header { padding: 3rem 1.5rem 2.5rem; margin: 0 -1.5rem; position: relative; overflow: hidden; }
+    .result-header::before { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50%; border: 35px solid rgba(255,255,255,0.12); top: -70px; right: -55px; }
+    .result-header::after { content: ''; position: absolute; width: 130px; height: 130px; border-radius: 50%; border: 22px solid rgba(255,255,255,0.15); top: -30px; right: -20px; }
+    .result-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 0.8rem; }
+    .result-name { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 300; color: var(--white); margin-bottom: 0.5rem; line-height: 1.1; }
+    .result-range { display: inline-block; background: rgba(255,255,255,0.2); color: var(--white); font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; }
+    .result-tagline { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.92); line-height: 1.5; max-width: 480px; }
+    .result-outcomes { background: var(--charcoal); margin: 0 -1.5rem; padding: 1.2rem 1.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; }
+    .result-outcome-item { background: var(--charcoal); padding: 0.9rem; text-align: center; }
+    .result-outcome-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--sage); line-height: 1; margin-bottom: 4px; }
+    .result-outcome-text { font-size: 11px; font-weight: 300; color: #aaa; line-height: 1.4; }
+    .result-body { padding: 1.5rem 0; }
+    .result-section { margin-bottom: 1.6rem; }
+    .result-label { font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage-dark); margin-bottom: 0.5rem; padding-bottom: 4px; border-bottom: 1px solid var(--sage-light); }
+    .result-text { font-size: 14px; font-weight: 300; line-height: 1.75; color: var(--charcoal-light); }
+    .result-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .result-bullets li { font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--charcoal-light); padding-left: 18px; position: relative; }
+    .result-bullets li::before { content: ''; position: absolute; left: 4px; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--sage); }
+    .gains-box { background: var(--white); border: 1px solid var(--taupe); border-radius: 8px; padding: 1.4rem; margin: 1.4rem 0; }
+    .gains-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 0.6rem; }
+    .gains-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; font-weight: 300; line-height: 1.55; color: var(--charcoal); }
+    .gain-icon { flex-shrink: 0; width: 20px; height: 20px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--sage-dark); font-weight: 500; margin-top: 1px; }
+    .next-step-box { background: var(--sage-light); border: 1px solid var(--sage); border-radius: 6px; padding: 1.25rem 1.4rem; margin: 1.4rem 0; }
+    .next-step-box .result-label { border-bottom-color: var(--sage); }
+    .next-step-box .result-text { color: var(--charcoal); }
+    .divider { height: 1px; background: var(--taupe); margin: 1.5rem 0; }
+    .email-capture { background: var(--charcoal); border-radius: 8px; padding: 2rem; margin-top: 1.5rem; }
+    .email-capture h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--cream); margin-bottom: 0.5rem; line-height: 1.2; }
+    .email-capture p { font-size: 13px; font-weight: 300; color: #aaa; margin-bottom: 1.25rem; line-height: 1.65; }
+    .email-form { display: flex; flex-direction: column; gap: 10px; }
+    .email-input { padding: 13px 16px; border: 1px solid #666; border-radius: 4px; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--cream); outline: none; transition: border-color 0.2s; }
+    .email-input::placeholder { color: #777; }
+    .email-input:focus { border-color: var(--sage); }
+    .email-note { font-size: 11px; color: #666; margin-top: 2px; }
+    .retake-link { display: block; text-align: center; margin-top: 1.5rem; font-size: 13px; color: var(--charcoal-light); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    .retake-link:hover { color: var(--charcoal); }
+
+    @media (max-width: 480px) {
+      #screen-intro h1 { font-size: 2.2rem; }
+      .outcomes-grid { grid-template-columns: 1fr 1fr; }
+      .q-text { font-size: 1.35rem; }
+      .result-name { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div id="screen-intro">
+    <p class="eyebrow">Executive Energy Audit</p>
+    <p class="for-who">For headteachers and school leaders who are brilliant at the job but running on fumes.</p>
+    <ul class="quick-wins">
+      <li>&#10003; 10 questions</li>
+      <li>&#10003; 5 minutes</li>
+      <li>&#10003; Instant result</li>
+      <li>&#10003; Free personalised PDF report</li>
+    </ul>
+    <button class="btn-primary" id="btn-start-top">Start my Audit now &#8594;</button>
+    <div style="margin-bottom:1.5rem;"></div>
+    <div class="intro-promise">
+      <strong>After this Audit you will know:</strong> which specific area of your leadership is draining you most, where your boundaries are collapsing, and the most important thing to change first.
+    </div>
+    <p class="intro-body">Sound familiar?</p>
+    <ul class="pain-list">
+      <li>You leave work and the mental load comes with you</li>
+      <li>You are present in body but somewhere else in your head</li>
+      <li>You say yes when every part of you wants to say no</li>
+      <li>You feel guilty when you stop</li>
+      <li>You keep missing the moments that matter</li>
+      <li>You are achieving everything and quietly wondering if this is it</li>
+    </ul>
+    <p class="intro-body">This is not a productivity quiz. It is a diagnostic.</p>
+    <p class="intro-body" style="font-weight:400; color: var(--charcoal);">Here is what you will walk away with:</p>
+    <div class="outcomes-grid">
+      <div class="outcome-card">
+        <div class="outcome-number">01</div>
+        <div class="outcome-label">Your Energy Profile</div>
+        <div class="outcome-desc">Know exactly which of the 5 leadership archetypes you are and what it means right now</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-number">02</div>
+        <div class="outcome-label">Your Drain Map</div>
+        <div class="outcome-desc">The 3 specific energy leaks most likely driving your depletion, named and explained</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-number">03</div>
+        <div class="outcome-label">What Changes</div>
+        <div class="outcome-desc">A clear picture of what your life and leadership look like once this is fixed</div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-number">04</div>
+        <div class="outcome-label">Your PDF Report</div>
+        <div class="outcome-desc">A full personalised report delivered to your inbox, yours to keep and act on</div>
+      </div>
+    </div>
+    <button class="btn-primary" id="btn-start">Start my Audit now &#8594;</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span id="progress-label">Question 1 of 10</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="question-area">
+      <p class="q-dimension" id="q-dimension"></p>
+      <p class="q-text" id="q-text"></p>
+      <div class="options" id="options-list"></div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn-secondary" id="btn-back" style="visibility:hidden">Back</button>
+      <button class="btn-primary" id="btn-next" disabled>Next</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="screen-result">
+    <div class="result-header" id="result-header">
+      <p class="result-eyebrow">Your Executive Energy Audit result</p>
+      <h2 class="result-name" id="result-name"></h2>
+      <span class="result-range" id="result-range"></span>
+      <p class="result-tagline" id="result-tagline"></p>
+    </div>
+    <div class="result-outcomes">
+      <div class="result-outcome-item">
+        <div class="result-outcome-num">2-3hrs</div>
+        <div class="result-outcome-text">of daily energy recovered when the right boundaries are in place</div>
+      </div>
+      <div class="result-outcome-item">
+        <div class="result-outcome-num">6wks</div>
+        <div class="result-outcome-text">average time for clients to feel meaningfully different with structured support</div>
+      </div>
+      <div class="result-outcome-item">
+        <div class="result-outcome-num">100%</div>
+        <div class="result-outcome-text">of clients report feeling more present at home after redesigning how they lead</div>
+      </div>
+    </div>
+    <div class="result-body">
+      <div class="result-section">
+        <p class="result-label">You are</p>
+        <p class="result-text" id="result-description"></p>
+      </div>
+      <div class="result-section">
+        <p class="result-label">What this means for you right now</p>
+        <ul class="result-bullets" id="result-reveals"></ul>
+      </div>
+      <div class="divider"></div>
+      <div class="result-section">
+        <p class="result-label">Where your energy is going</p>
+        <ul class="result-bullets" id="result-leaks"></ul>
+      </div>
+      <div class="gains-box">
+        <p class="result-label">What changes when you fix this</p>
+        <ul class="gains-list" id="result-gains"></ul>
+      </div>
+      <div class="next-step-box">
+        <p class="result-label">Your next step</p>
+        <p class="result-text" id="result-next"></p>
+      </div>
+      <div class="result-section">
+        <p class="result-label">Recommended reading</p>
+        <ul class="result-bullets" id="result-resources"></ul>
+      </div>
+      <div class="email-capture">
+        <h3>Get your full report sent to your inbox</h3>
+        <p>Your personalised PDF includes a deeper breakdown of your profile and a clear roadmap for your next steps. Free. Yours to keep.</p>
+        <div class="email-form">
+          <input class="email-input" type="text" placeholder="Your first name" id="capture-name" />
+          <input class="email-input" type="email" placeholder="Your email address" id="capture-email" />
+          <button class="btn-primary" id="btn-submit" style="width:100%">Send me my full report &#8594;</button>
+        </div>
+        <p class="email-note">No spam. No selling. Just your report, straight to your inbox.</p>
+      </div>
+      <span class="retake-link" id="btn-retake">Retake the Audit</span>
+    </div>
+  </div>
+
+</div>
+<script>
 var IlluminateAudit = (function() {
 
   var questions = [
@@ -175,12 +425,12 @@ var IlluminateAudit = (function() {
     var emailVal = emailEl.value.trim();
     if (!emailVal) { alert('Please enter your email address.'); return; }
 
-    // REPLACE YOUR_API_KEY and YOUR_GROUP_ID with your real MailerLite values
+    // eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiYzlkOWYzM2NmYWQzNWM4ZGMyNzhhZjQzNzg2N2Q5YTRkY2E2MTg2YTE0NTE0OGYxZTcyOGY4OGIyMzE3MzBjYTkyM2I5NmFjZmY2NmI1MTEiLCJpYXQiOjE3NzkxMjQ1NTUuNzk4Mjc2LCJuYmYiOjE3NzkxMjQ1NTUuNzk4MjgxLCJleHAiOjQ5MzQ3OTgxNTUuNzkxMTY1LCJzdWIiOiIyMzc2MzUzIiwic2NvcGVzIjpbXX0.fFF9K8Bg8QMtdp5jlLRAPoc4xyK5k6az0CTPPVZR_XycI8t8fAsUCb8fHiGhH59mpUgl786y9G5fpwo3mpUmMhhydsqJ8YZcjGkuYDJjICcKYSSEM-XtZFCYmRT0W14gfkcEVmh73E_taTOhDi_-kmLb8swc_gTpgwOTAG34-cgk2oLrOj9_k4ZjZt2ujDtyrGvsnwe3BhooyQKop7D2vjZcm9PAJINYtlCieNw-fOnz0zWXyz9rQ9VylrO8KDTv3SS5jYekC04tqfX0kE5e0gS0pAakpsSO4CVaMp3B7ZpKbmAXMi8sWLqvSD59A1CEfITiD7UY7jXueDerS3tSO4tWAxgKd4j5avexULKpOwSM2_i50nPhRmxXmKsgqBvO1NnaRS9Q_RdpHNz4fjX3_J2JsWDWzwpoP8dq_2brsEHrE5OE0tlBCF97x3km7ZaYahKg3DkHx1OvCNYPR4yrwCFTgdMF-4L-CWb0AybpEaVJU9RQym8h6Gek7VQqwhNLMR48iT678eDWnITujR91SyjYSNWIo91PG0A2S5i-7hjEzJoStvzgOi7ExOAL8LyCjAHLYQOFvZerMq7M8evFRy-_XUejZf67MCIzy0_u3kjS649uqFYdToIjYwQmyXP76w1PYjK0pPkH5Trv5naOvi0opyGTqS46FNcB0UxsVIs and 187819358113761175 with your real MailerLite values
     fetch('https://connect.mailerlite.com/api/subscribers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_API_KEY'
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiYzlkOWYzM2NmYWQzNWM4ZGMyNzhhZjQzNzg2N2Q5YTRkY2E2MTg2YTE0NTE0OGYxZTcyOGY4OGIyMzE3MzBjYTkyM2I5NmFjZmY2NmI1MTEiLCJpYXQiOjE3NzkxMjQ1NTUuNzk4Mjc2LCJuYmYiOjE3NzkxMjQ1NTUuNzk4MjgxLCJleHAiOjQ5MzQ3OTgxNTUuNzkxMTY1LCJzdWIiOiIyMzc2MzUzIiwic2NvcGVzIjpbXX0.fFF9K8Bg8QMtdp5jlLRAPoc4xyK5k6az0CTPPVZR_XycI8t8fAsUCb8fHiGhH59mpUgl786y9G5fpwo3mpUmMhhydsqJ8YZcjGkuYDJjICcKYSSEM-XtZFCYmRT0W14gfkcEVmh73E_taTOhDi_-kmLb8swc_gTpgwOTAG34-cgk2oLrOj9_k4ZjZt2ujDtyrGvsnwe3BhooyQKop7D2vjZcm9PAJINYtlCieNw-fOnz0zWXyz9rQ9VylrO8KDTv3SS5jYekC04tqfX0kE5e0gS0pAakpsSO4CVaMp3B7ZpKbmAXMi8sWLqvSD59A1CEfITiD7UY7jXueDerS3tSO4tWAxgKd4j5avexULKpOwSM2_i50nPhRmxXmKsgqBvO1NnaRS9Q_RdpHNz4fjX3_J2JsWDWzwpoP8dq_2brsEHrE5OE0tlBCF97x3km7ZaYahKg3DkHx1OvCNYPR4yrwCFTgdMF-4L-CWb0AybpEaVJU9RQym8h6Gek7VQqwhNLMR48iT678eDWnITujR91SyjYSNWIo91PG0A2S5i-7hjEzJoStvzgOi7ExOAL8LyCjAHLYQOFvZerMq7M8evFRy-_XUejZf67MCIzy0_u3kjS649uqFYdToIjYwQmyXP76w1PYjK0pPkH5Trv5naOvi0opyGTqS46FNcB0UxsVIs'
       },
       body: JSON.stringify({
         email: emailVal,
@@ -189,7 +439,7 @@ var IlluminateAudit = (function() {
           audit_profile: sessionStorage.getItem('auditProfile') || '',
           audit_score: sessionStorage.getItem('auditScore') || 'none'
         },
-        groups: ['YOUR_GROUP_ID']
+        groups: ['187819358113761175']
       })
     })
     .then(function(res) { return res.json(); })
@@ -213,7 +463,7 @@ var IlluminateAudit = (function() {
   function wireButtons() {
     try {
       var start = document.getElementById('btn-start');
-      if (!start) { return false; }
+      if (!start) { setTimeout(wireButtons, 150); return; }
       start.addEventListener('click', startQuiz);
       var startTop = document.getElementById('btn-start-top');
       if (startTop) { startTop.addEventListener('click', startQuiz); }
@@ -221,28 +471,14 @@ var IlluminateAudit = (function() {
       document.getElementById('btn-back').addEventListener('click', prevQuestion);
       document.getElementById('btn-submit').addEventListener('click', submitEmail);
       document.getElementById('btn-retake').addEventListener('click', retake);
-      return true;
-    } catch(e) { return false; }
+    } catch(e) { setTimeout(wireButtons, 150); }
   }
-
-  // Use MutationObserver to watch for the button appearing in the DOM
-  var observer = new MutationObserver(function() {
-    if (wireButtons()) {
-      observer.disconnect();
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-
-  // Also try immediately and at intervals as fallback
-  if (!wireButtons()) {
-    var attempts = 0;
-    var interval = setInterval(function() {
-      attempts++;
-      if (wireButtons() || attempts > 50) {
-        clearInterval(interval);
-      }
-    }, 200);
-  }
+  setTimeout(wireButtons, 300);
 
   return {};
 })();
+
+</script>
+</body>
+</html>
+
